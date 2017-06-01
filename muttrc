@@ -1,0 +1,135 @@
+# {{{ gary.a.howard@mac.com ---------------------------------------------------
+set my_user=gary.a.howard@mac.com
+set my_name='Gary A. Howard'
+
+# # Receive options
+set imap_user=gary.a.howard
+set imap_pass=''
+
+set folder=imaps://mail.me.com:993/
+set spoolfile = +INBOX
+set postponed = +Drafts
+set record = +Sent
+ 
+# Send options
+set smtp_url=smtps://$my_user:$imap_pass@smtp.me.com
+set realname=$my_name
+set from=$my_user
+ 
+# Connection options
+set ssl_force_tls=yes
+set ssl_starttls=yes
+ 
+# The magic line that makes it all work
+set imap_pipeline_depth=0
+ 
+# Add mailboxes
+mailboxes +INBOX \
+          +Sent \
+          +Trash
+# ------------------------------------------------------------------------- }}}
+# {{{ Aliases------------------------------------------------------------------
+set alias_file = ~/.mutt/aliases.muttrc
+# ------------------------------------------------------------------------- }}}
+# {{{ Bindings ----------------------------------------------------------------
+# ignore keys 
+bind index,pager \#   noop
+bind index i          noop
+
+# bindings
+bind index,pager R    group-reply        #reply all?
+bind index <tab>      sync-mailbox
+bind index <space>    collapse-thread
+bind index,pager \Cs copy-message
+# ------------------------------------------------------------------------- }}}
+# {{{ Colors ------------------------------------------------------------------
+# Color messages with attachments diferently
+# Color index blue black "~X 1-"
+
+# Color Sender
+color header cyan black ^From:
+
+# Color quoted text
+color quoted magenta black
+
+# Color URLs
+color body brightblue black (https?|ftp)(://)[\-\.,/%~_:?&=\#a-zA-Z0-9]+
+
+# Color domain name
+
+# Color IP Address
+
+# Color email addresses
+color body	brightred black [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
+
+# Flagged Messages are important!
+color index brightred black "~F"
+
+# Highlight new messages
+color index brightyellow black ~N
+
+color tree brightmagenta default             # color thread tree
+# ------------------------------------------------------------------------- }}}
+# {{{ Directories -------------------------------------------------------------
+set header_cache = "~/.mutt/cache/headers"
+set message_cachedir = "~/.mutt/cache/bodies"
+set certificate_file = "~/.mutt/certificates"
+# ------------------------------------------------------------------------- }}}
+# {{{ Index -------------------------------------------------------------------
+set sort             = threads
+set strict_threads                           # don't thread messages by subject
+set sort_aux         = reverse-last-date-received
+set collapse_unread  = no
+set uncollapse_jump                          # don't collapse on an unread message
+set sort_re                                  # thread based on regex
+set reply_regexp     = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+folder-hook . "push <collapse-all>"          # threads collapsed by default 
+#set locale           = "es_MX.utf8"
+set date_format      = "%a %d %b %Y %I:%M %P"
+
+# If msg has attachments show [+] else insert spaces for padding
+# msg no. | attach | flags | thread | date | size | from | subject
+set index_format     = "%3C %?X?[+]&   ? %Z %?M?+& ? %D   (%-4.4c)   %-26.24F %s"
+set to_chars = ""                            # Characters used to indicate mail addressed to you. I don't care.
+# ------------------------------------------------------------------------- }}}
+# {{{ Pager -------------------------------------------------------------------
+bind pager /          search
+bind pager <up>       previous-line
+bind pager <down>     next-line
+# ------------------------------------------------------------------------- }}}
+# {{{ Sidebar------------------------------------------------------------------
+set sidebar_visible = yes
+set sidebar_width = 20
+set sidebar_short_path = no
+set sidebar_delim_chars = '/.'
+set sidebar_folder_indent = no
+set sidebar_indent_string = '  '
+set sidebar_new_mail_only = no
+set sidebar_next_new_wrap = no
+set sidebar_divider_char = '|'
+set mail_check_stats
+set sidebar_format = '%B%?F? [%F]?%* %?N?%N/?%S'
+set sidebar_sort_method = 'unsorted'
+bind index,pager \Cp sidebar-prev
+bind index,pager \Cn sidebar-next
+bind index,pager \Co sidebar-open
+# bind index,pager k sidebar-prev
+# bind index,pager j sidebar-next
+bind index,pager <F3> sidebar-page-up
+bind index,pager <F4> sidebar-page-down
+bind index,pager <F5> sidebar-prev-new
+bind index,pager <F6> sidebar-next-new
+bind index,pager B sidebar-toggle-visible
+color indicator cyan black
+color sidebar_highlight black color8
+color sidebar_divider color8 black
+color sidebar_flagged red black
+color sidebar_new green black
+# ------------------------------------------------------------------------- }}}
+# {{{ Statusbar----------------------------------------------------------------
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"  
+# ------------------------------------------------------------------------- }}}
+# {{{ Macros ------------------------------------------------------------------
+macro index,pager <F7> "<pipe-message>~/.mutt/view_images.sh<enter>" "view images"
+# ------------------------------------------------------------------------- }}}

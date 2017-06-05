@@ -1,4 +1,4 @@
-# {{{ gary.a.howard@mac.com ---------------------------------------------------
+# {{{{ gary.a.howard@mac.om ---------------------------------------------------
 set my_user=gary.a.howard@mac.com
 set my_name='Gary A. Howard'
 
@@ -6,130 +6,206 @@ set my_name='Gary A. Howard'
 set imap_user=gary.a.howard
 set imap_pass=''
 
-set folder=imaps://mail.me.com:993/
+# Read email host:  imap.mail.me.com:993
+set folder="imaps://$my_user@imap.mail.me.com:993/"
 set spoolfile = +INBOX
 set postponed = +Drafts
 set record = +Sent
- 
-# Send options
-set smtp_url=smtps://$my_user:$imap_pass@smtp.me.com
+
+# Send mail host: smtp.mail.me.com:587
+set smtp_url="smtp://$my_user:$imap_pass@smtp.mail.me.com:587/"
 set realname=$my_name
 set from=$my_user
- 
+
 # Connection options
 set ssl_force_tls=yes
 set ssl_starttls=yes
- 
+
 # The magic line that makes it all work
 set imap_pipeline_depth=0
- 
+
+#set smtp_authenticators = 'gssapi:login'
+set smtp_authenticators = 'login'
+
 # Add mailboxes
 mailboxes +INBOX \
           +Sent \
+          +Jobs \
           +Trash
 # ------------------------------------------------------------------------- }}}
-# {{{ Aliases------------------------------------------------------------------
-set alias_file = ~/.mutt/aliases.muttrc
-# ------------------------------------------------------------------------- }}}
 # {{{ Bindings ----------------------------------------------------------------
-# ignore keys 
-bind index,pager \#   noop
-bind index i          noop
+bind index gg         first-entry
+bind index G          last-entry
 
-# bindings
-bind index,pager R    group-reply        #reply all?
+bind index R          group-reply
 bind index <tab>      sync-mailbox
 bind index <space>    collapse-thread
-bind index,pager \Cs copy-message
 # ------------------------------------------------------------------------- }}}
 # {{{ Colors ------------------------------------------------------------------
-# Color messages with attachments diferently
-# Color index blue black "~X 1-"
+# general-doesn't-fit stuff
+color normal color252 black
+color error color193 black 
+color markers color142 black
+color tilde color142 black
+color status brightblue black 
 
-# Color Sender
-color header cyan black ^From:
-
-# Color quoted text
-color quoted magenta black
-
-# Color URLs
-color body brightblue black (https?|ftp)(://)[\-\.,/%~_:?&=\#a-zA-Z0-9]+
-
-# Color domain name
-
-# Color IP Address
-
-# Color email addresses
-color body	brightred black [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
-
-# Flagged Messages are important!
-color index brightred black "~F"
-
-# Highlight new messages
+# index stuff
+color tree color244 black
+color indicator brightmagenta black
+color index brightred black ~F
 color index brightyellow black ~N
+color index color124 black ~D
+color index white black ~O
 
-color tree brightmagenta default             # color thread tree
+# header stuff
+color hdrdefault color248 black
+color header brightmagenta black "^From"
+color header color224 black "^To"
+color header color225 black "^Date"
+color header color226 black "^Subject"
+
+# url, email and web stuff
+color body color68 black "(finger|ftp|http|https|news|telnet)://[^ >]*"
+color body color111 black "<URL:[^ ]*>"
+color body color111 black "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body color111 black "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+color body brightred black "^-.*"
+color body green black "^[+].*"
+color body brightwhite black "^diff .*"
+color body brightyellow black "^@@.*"
+
+# misc body stuff
+color attachment color111 black
+color signature color244 black
+
+# quote levels
+color quoted color34   black
+color quoted1 color142 black
+color quoted2 color34  black
+color quoted3 color142 black
+color quoted4 color34  black
+color quoted5 color142 black
+color quoted6 color34  black
+color quoted7 color142 black
+color quoted8 color34  black
+color quoted9 color142 black
+
+# Sidebar
+color sidebar_divider brightblue black
+color sidebar_highlight brightmagenta black 
+color sidebar_indicator brightcyan black
+color sidebar_new color221 black 
 # ------------------------------------------------------------------------- }}}
 # {{{ Directories -------------------------------------------------------------
-set header_cache = "~/.mutt/cache/headers"
-set message_cachedir = "~/.mutt/cache/bodies"
-set certificate_file = "~/.mutt/certificates"
-# ------------------------------------------------------------------------- }}}
-# {{{ Index -------------------------------------------------------------------
-set sort             = threads
-set strict_threads                           # don't thread messages by subject
-set sort_aux         = reverse-last-date-received
-set collapse_unread  = no
-set uncollapse_jump                          # don't collapse on an unread message
-set sort_re                                  # thread based on regex
-set reply_regexp     = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-folder-hook . "push <collapse-all>"          # threads collapsed by default 
-#set locale           = "es_MX.utf8"
-set date_format      = "%a %d %b %Y %I:%M %P"
+# Files that are NOT version controlled.
+set header_cache = "~/mail/mutt/cache/headers"
+set message_cachedir = "~/mail/mutt/cache/bodies"
+set message_cachedir = "~/mail/mutt/temp"
 
-# If msg has attachments show [+] else insert spaces for padding
-# msg no. | attach | flags | thread | date | size | from | subject
-set index_format     = "%3C %?X?[+]&   ? %Z %?M?+& ? %D   (%-4.4c)   %-26.24F %s"
-set to_chars = ""                            # Characters used to indicate mail addressed to you. I don't care.
+# Files that are version controlled.
+set alias_file = "~/.mutt/alias"
+set certificate_file = "~/.mutt/certificates"
+set mailcap_path = "~/.mutt/mailcap"
+set signature = "~/.mutt/sig"
 # ------------------------------------------------------------------------- }}}
-# {{{ Pager -------------------------------------------------------------------
+# {{{ Index view options ------------------------------------------------------
+set date_format = "%a %d %b %Y %I:%M %P"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set sort = threads                         # like gmail
+set sort_aux = reverse-last-date-received  # like gmail
+set uncollapse_jump                        # don't collapse on an unread message
+set sort_re                                # thread based on regex
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+# ------------------------------------------------------------------------- }}}
+# {{{ Pager view options -------------------------------------------------------
+set pager_index_lines = 10 # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+alternative_order text/plain text/enriched text/html
+# ------------------------------------------------------------------------- }}}
+# {{{ Pager key bindings -------------------------------------------------------
 bind pager /          search
-bind pager <up>       previous-line
-bind pager <down>     next-line
+# bind pager <up>       previous-line
+# bind pager <down>     next-line
 # ------------------------------------------------------------------------- }}}
 # {{{ Sidebar------------------------------------------------------------------
 set sidebar_visible = yes
-set sidebar_width = 20
+set sidebar_width = 15
 set sidebar_short_path = no
 set sidebar_delim_chars = '/.'
 set sidebar_folder_indent = no
-set sidebar_indent_string = '  '
+set sidebar_indent_string = ' '
 set sidebar_new_mail_only = no
 set sidebar_next_new_wrap = no
-set sidebar_divider_char = '|'
+set sidebar_divider_char   = '│'
 set mail_check_stats
 set sidebar_format = '%B%?F? [%F]?%* %?N?%N/?%S'
 set sidebar_sort_method = 'unsorted'
-bind index,pager \Cp sidebar-prev
-bind index,pager \Cn sidebar-next
-bind index,pager \Co sidebar-open
-# bind index,pager k sidebar-prev
-# bind index,pager j sidebar-next
+bind index,pager <right> sidebar-open
+bind index,pager <up> sidebar-prev
+bind index,pager <down> sidebar-next
 bind index,pager <F3> sidebar-page-up
 bind index,pager <F4> sidebar-page-down
 bind index,pager <F5> sidebar-prev-new
 bind index,pager <F6> sidebar-next-new
-bind index,pager B sidebar-toggle-visible
-color indicator cyan black
-color sidebar_highlight black color8
-color sidebar_divider color8 black
-color sidebar_flagged red black
-color sidebar_new green black
+bind index,pager \Cn sidebar-toggle-visible
 # ------------------------------------------------------------------------- }}}
 # {{{ Statusbar----------------------------------------------------------------
 set status_chars  = " *%A"
-set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"  
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+# ------------------------------------------------------------------------- }}}
+# {{{ Header options-----------------------------------------------------------
+ignore *                                # ignore all headers
+unignore from: to: cc: date: subject:   # show only these
+unhdr_order *                           # some distros order things by default
+hdr_order from: to: cc: date: subject:  # and in this order
 # ------------------------------------------------------------------------- }}}
 # {{{ Macros ------------------------------------------------------------------
 macro index,pager <F7> "<pipe-message>~/.mutt/view_images.sh<enter>" "view images"
+
+# Ctrl-R to mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# Saner copy/move dialogs
+macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+# ------------------------------------------------------------------------- }}}
+# {{{ Editor ------------------------------------------------------------------
+set editor = "vim"
+# ------------------------------------------------------------------------- }}}
+# {{{ Basic Operations --------------------------------------------------------
+set wait_key = no        # shut up, mutt
+set mbox_type = Maildir  # mailbox type
+set timeout = 3          # idle time before scanning
+set mail_check = 0       # minimum time between scans
+unset move               # gmail does that
+set delete               # don't ask, just do
+unset confirmappend      # don't ask, just do!
+set quit                 # don't ask, just do!!
+unset mark_old           # read/new is good enough for me
+set beep_new             # bell on new mails
+set pipe_decode          # strip headers and eval mimes when piping
+set thorough_search      # strip headers and eval mimes before searching
+# ------------------------------------------------------------------------- }}}
+# {{{ Compose View Options-----------------------------------------------------
+set realname = "Gary A. Howard"      # who am i?
+set envelope_from                    # which from?
+set sig_dashes                       # dashes before sig
+set edit_headers                     # show headers when composing
+set fast_reply                       # skip to compose when replying
+set askcc                            # ask for CC:
+set fcc_attach                       # save attachments with the body
+unset mime_forward                   # forward attachments as part of body
+set forward_format = "Fwd: %s"       # format of subject when forwarding
+set forward_decode                   # decode when forwarding
+set attribution = "On %d, %n wrote:" # format of quoting header
+set reply_to                         # reply to Reply to: field
+set reverse_name                     # reply as whomever it was to
+set include                          # include message in replies
+set forward_quote                    # include message in forwards
 # ------------------------------------------------------------------------- }}}

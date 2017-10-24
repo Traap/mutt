@@ -2,19 +2,18 @@
 set my_user=gary.a.howard@mac.com
 set my_name='Gary A. Howard'
 
-# # Receive options
+## Receive options
 set imap_user=gary.a.howard
-set imap_pass='ksoi-pmeg-vluq-hlat'
-set smtp_pass='ksoi-pmeg-vluq-hlat'
+source ~/.ssh/config.mutt
 
 # Read email
-set folder="imaps://gary.a.howard@imap.mail.me.com:993/"
+set folder="imaps://$imap_user@imap.mail.me.com:993/"
 set spoolfile = +INBOX
 set postponed = +Drafts
 set record = +Sent
 
 # Send mail
-set smtp_url="smtp://gary.a.howard@smtp.mail.me.com:587/"
+set smtp_url="smtp://@smtp.mail.me.com:587/"
 set realname=$my_name
 set from=$my_user
 

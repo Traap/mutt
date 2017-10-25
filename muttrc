@@ -1,4 +1,4 @@
-# {{{ gary.a.howard@mac.com 
+# {{{ gary.a.howard@mac.com
 set my_user=gary.a.howard@mac.com
 set my_name='Gary A. Howard'
 
@@ -41,14 +41,16 @@ bind index <tab>      sync-mailbox
 bind index <space>    collapse-thread
 # ------------------------------------------------------------------------- }}}
 # {{{ Colors
-# general-doesn't-fit stuff
+
+# general-doesn't-fit
 color normal color252 black
-color error color193 black 
+color error color193 black
 color markers color142 black
 color tilde color142 black
-color status brightblue black 
+color status brightblue black
+color prompt brightcyan black
 
-# index stuff
+# index
 color tree color244 black
 color indicator brightmagenta black
 color index brightred black ~F
@@ -56,14 +58,14 @@ color index brightyellow black ~N
 color index color124 black ~D
 color index white black ~O
 
-# header stuff
+# header
 color hdrdefault color248 black
 color header brightmagenta black "^From"
 color header color224 black "^To"
 color header color225 black "^Date"
 color header color226 black "^Subject"
 
-# url, email and web stuff
+# url, email, and web
 color body color68 black "(finger|ftp|http|https|news|telnet)://[^ >]*"
 color body color111 black "<URL:[^ ]*>"
 color body color111 black "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
@@ -73,7 +75,7 @@ color body green black "^[+].*"
 color body brightwhite black "^diff .*"
 color body brightyellow black "^@@.*"
 
-# misc body stuff
+# misc body
 color attachment color111 black
 color signature color244 black
 
@@ -91,9 +93,9 @@ color quoted9 color142 black
 
 # Sidebar
 color sidebar_divider brightblue black
-color sidebar_highlight brightmagenta black 
+color sidebar_highlight brightmagenta black
 color sidebar_indicator brightcyan black
-color sidebar_new color221 black 
+color sidebar_new color221 black
 # ------------------------------------------------------------------------- }}}
 # {{{ Directories
 # Files that are NOT version controlled.
@@ -178,7 +180,7 @@ macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 #set editor = "vim"
 set editor = "vim -c syntax=mail ft=mail enc=utf-8"
 # ------------------------------------------------------------------------- }}}
-# {{{ utf-8  
+# {{{ utf-8
 set send_charset="utf-8"
 set assumed_charset="iso-8859-1"
 # ------------------------------------------------------------------------- }}}

@@ -187,7 +187,7 @@ set assumed_charset="iso-8859-1"
 # {{{ Basic Operations
 set wait_key = no        # shut up, mutt
 set mbox_type = Maildir  # mailbox type
-set timeout = 3          # idle time before scanning
+set timeout = 1          # idle time before scanning
 set mail_check = 0       # minimum time between scans
 unset move               # gmail does that
 set delete               # don't ask, just do

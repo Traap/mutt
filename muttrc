@@ -1,21 +1,28 @@
 # {{{ gary.a.howard@mac.com
-set my_user=gary.a.howard@mac.com
-set my_name='Gary A. Howard'
 
-## Receive options
-set imap_user=gary.a.howard
-source ~/.ssh/config.mutt
+set my_user=gary.a.howard
+set my_host=mac.com
+set my_name='Gary A. Howard'
+source ~/git/ssh/config.mutt
+set beep = off
+
+# -------------------------------------------------------------------------- }}}
+# {{{ imap and smtp settings
+
+## imap 
+set imap_user=$my_user@$my_host
+set imap_pass=$my_pass
 
 # Read email
-set folder="imaps://$imap_user@imap.mail.me.com:993/"
+set folder="imaps://imap.mail.me.com:993/"
 set spoolfile = +INBOX
 set postponed = +Drafts
 set record = +Sent
 
 # Send mail
-set smtp_url="smtp://@smtp.mail.me.com:587/"
+set smtp_url="smtp://smtp.mail.me.com:587/"
 set realname=$my_name
-set from=$my_user
+set from=$my_user@$my_host
 
 # Connection options
 set ssl_force_tls=yes
@@ -24,22 +31,26 @@ set ssl_starttls=yes
 # The magic line that makes it all work
 set imap_pipeline_depth=0
 
-set smtp_authenticators = 'gssapi:login'
+set smtp_authenticators = 'login'
 
 # Add mailboxes
 mailboxes +INBOX \
           +Sent \
           +Jobs \
           +Trash
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Bindings
+
+bind index g noop
 bind index gg         first-entry
 bind index G          last-entry
 
 bind index R          group-reply
 bind index <tab>      sync-mailbox
 bind index <space>    collapse-thread
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Colors
 
 # general-doesn't-fit
@@ -96,8 +107,10 @@ color sidebar_divider brightblue black
 color sidebar_highlight brightmagenta black
 color sidebar_indicator brightcyan black
 color sidebar_new color221 black
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Directories
+
 # Files that are NOT version controlled.
 set header_cache = "~/mail/mutt/cache/headers"
 set message_cachedir = "~/mail/mutt/cache/bodies"
@@ -108,8 +121,10 @@ set alias_file = "~/.mutt/alias"
 set certificate_file = "~/.mutt/certificates"
 set mailcap_path = "~/.mutt/mailcap"
 set signature = "~/.mutt/sig"
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Index view options
+
 set date_format = "%a %d %b %Y %I:%M %P"
 set index_format = "[%Z]  %D  %-20.20F  %s"
 set sort = threads                         # like gmail
@@ -117,8 +132,10 @@ set sort_aux = reverse-last-date-received  # like gmail
 set uncollapse_jump                        # don't collapse on an unread message
 set sort_re                                # thread based on regex
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Pager view options
+
 set pager_index_lines = 10 # number of index lines to show
 set pager_context = 3      # number of context lines to show
 set pager_stop             # don't go to next message automatically
@@ -128,13 +145,17 @@ unset markers              # no ugly plus signs
 
 set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 alternative_order text/plain text/enriched text/html
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Pager key bindings
+
 bind pager /          search
 # bind pager <up>       previous-line
 # bind pager <down>     next-line
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Sidebar
+
 set sidebar_visible = yes
 set sidebar_width = 15
 set sidebar_short_path = no
@@ -155,18 +176,24 @@ bind index,pager <F4> sidebar-page-down
 bind index,pager <F5> sidebar-prev-new
 bind index,pager <F6> sidebar-next-new
 bind index,pager \Cn sidebar-toggle-visible
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Statusbar
+
 set status_chars  = " *%A"
 set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Header options
+
 ignore *                                # ignore all headers
 unignore from: to: cc: date: subject:   # show only these
 unhdr_order *                           # some distros order things by default
 hdr_order from: to: cc: date: subject:  # and in this order
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Macros
+
 macro index,pager <F7> "<pipe-message>~/.mutt/view_images.sh<enter>" "view images"
 
 # Ctrl-R to mark all as read
@@ -175,16 +202,22 @@ macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "ma
 # Saner copy/move dialogs
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Editor
+
 #set editor = "vim"
 set editor = "vim -c syntax=mail ft=mail enc=utf-8"
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ utf-8
+
 set send_charset="utf-8"
 set assumed_charset="iso-8859-1"
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Basic Operations
+
 set wait_key = no        # shut up, mutt
 set mbox_type = Maildir  # mailbox type
 set timeout = 1          # idle time before scanning
@@ -197,8 +230,10 @@ unset mark_old           # read/new is good enough for me
 set beep_new             # bell on new mails
 set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}
 # {{{ Compose View Options
+
 set envelope_from                    # which from?
 set sig_dashes                       # dashes before sig
 set edit_headers                     # show headers when composing
@@ -213,4 +248,5 @@ set reply_to                         # reply to Reply to: field
 set reverse_name                     # reply as whomever it was to
 set include                          # include message in replies
 set forward_quote                    # include message in forwards
-# ------------------------------------------------------------------------- }}}
+
+# -------------------------------------------------------------------------- }}}

@@ -9,7 +9,7 @@ set beep = off
 # -------------------------------------------------------------------------- }}}
 # {{{ imap and smtp settings
 
-## imap 
+## imap
 set imap_user=$my_user@$my_host
 set imap_pass=$my_pass
 
@@ -25,8 +25,8 @@ set realname=$my_name
 set from=$my_user@$my_host
 
 # Connection options
-set ssl_force_tls=yes
-set ssl_starttls=yes
+# set ssl_force_tls=yes
+# set ssl_starttls=yes
 
 # The magic line that makes it all work
 set imap_pipeline_depth=0
@@ -35,9 +35,11 @@ set smtp_authenticators = 'login'
 
 # Add mailboxes
 mailboxes +INBOX \
-          +Sent \
-          +Jobs \
-          +Trash
+          +AC \
+          +Smiths \
+          # +Drafts \
+          # +Sent \
+          # +Trash
 
 # -------------------------------------------------------------------------- }}}
 # {{{ Bindings
@@ -206,8 +208,8 @@ macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 # -------------------------------------------------------------------------- }}}
 # {{{ Editor
 
-#set editor = "vim"
-set editor = "vim -c syntax=mail ft=mail enc=utf-8"
+set editor = "nvim"
+# set editor = "vim -c syntax=mail ft=mail enc=utf-8"
 
 # -------------------------------------------------------------------------- }}}
 # {{{ utf-8

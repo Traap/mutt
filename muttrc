@@ -4,7 +4,7 @@ set my_user=gary.a.howard
 set my_host=mac.com
 set my_name='Gary A. Howard'
 source ~/git/ssh/config.mutt
-set beep = off
+set beep=no
 
 # -------------------------------------------------------------------------- }}}
 # {{{ imap and smtp settings

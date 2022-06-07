@@ -208,8 +208,9 @@ macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 # -------------------------------------------------------------------------- }}}
 # {{{ Editor
 
-set editor = "nvim"
-# set editor = "vim -c syntax=mail ft=mail enc=utf-8"
+# set editor = "nvim"
+# set editor = "nvim -c syntax=mail ft=mail enc=utf-8"
+set editor = "vim -c syntax=mail ft=mail enc=utf-8"
 
 # -------------------------------------------------------------------------- }}}
 # {{{ utf-8

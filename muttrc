@@ -7,7 +7,6 @@ source ~/git/ssh/config.mutt
 set beep=no
 
 # -------------------------------------------------------------------------- }}}
-# {{{ imap and smtp settings
 
 ## imap
 set imap_user=$my_user@$my_host
@@ -36,6 +35,7 @@ set smtp_authenticators = 'login'
 # Add mailboxes
 mailboxes +INBOX \
           +AC \
+          +426a \
           +Smiths \
           # +Drafts \
           # +Sent \

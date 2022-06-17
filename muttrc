@@ -7,6 +7,7 @@ source ~/git/ssh/config.mutt
 set beep=no
 
 # -------------------------------------------------------------------------- }}}
+# {{{ imap & smtp
 
 ## imap
 set imap_user=$my_user@$my_host
@@ -32,7 +33,9 @@ set imap_pipeline_depth=0
 
 set smtp_authenticators = 'login'
 
-# Add mailboxes
+# -------------------------------------------------------------------------- }}}
+# {{{ Add mailboxes
+
 mailboxes +INBOX \
           +AC \
           +426a \
@@ -208,9 +211,8 @@ macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 # -------------------------------------------------------------------------- }}}
 # {{{ Editor
 
-# set editor = "nvim"
-# set editor = "nvim -c syntax=mail ft=mail enc=utf-8"
-set editor = "vim -c syntax=mail ft=mail enc=utf-8"
+set editor = "nvim"
+# set editor = "vim -c syntax=mail ft=mail enc=utf-8"
 
 # -------------------------------------------------------------------------- }}}
 # {{{ utf-8

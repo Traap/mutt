@@ -17,7 +17,7 @@ set imap_pass=$my_pass
 set folder="imaps://imap.mail.me.com:993/"
 set spoolfile = +INBOX
 set postponed = +Drafts
-set record = +Sent
+set record = +"Sent Messages"
 
 # Send mail
 set smtp_url="smtp://smtp.mail.me.com:587/"
@@ -40,6 +40,7 @@ mailboxes +INBOX \
           +AC \
           +426a \
           +Smiths \
+          +"Sent Messages"
           # +Drafts \
           # +Sent \
           # +Trash
@@ -162,7 +163,7 @@ bind pager /          search
 # {{{ Sidebar
 
 set sidebar_visible = yes
-set sidebar_width = 15
+set sidebar_width = 18
 set sidebar_short_path = no
 set sidebar_delim_chars = '/.'
 set sidebar_folder_indent = no

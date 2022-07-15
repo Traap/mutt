@@ -1,18 +1,7 @@
-# MS Word documents
-application/msword; ~/.mutt/view_attachment.sh %s "-" '/Applications/TextEdit.app'
-
-# Images
-image/jpg; ~/.mutt/view_attachment.sh %s jpg
-image/jpeg; ~/.mutt/view_attachment.sh %s jpg
-image/pjpeg; ~/.mutt/view_attachment.sh %s jpg
-image/png; ~/.mutt/view_attachment.sh %s png
-image/gif; ~/.mutt/view_attachment.sh %s gif
- 
-# PDFs
-application/pdf; ~/.mutt/view_attachment.sh %s pdf
- 
-# HTML
-text/html; ~/.mutt/view_attachment.sh %s html
- 
-# Unidentified files
-application/octet-stream; ~/.mutt/view_attachment.sh %s "-"
+application/pdf; $HOME/git/mutt/openfile %s ;
+audio/*; mpv %s ;
+image/*; $HOME/git/mutt/openfile %s ;
+text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -dump -width=1024 %s; nametemplate=%s.html; copiousoutput;
+text/html; $HOME/git/mutt/openfile %s ; nametemplate=%s.html
+text/plain; $EDITOR %s ;
+video/*; setsid mpv --quiet %s &; copiousoutput

@@ -37,11 +37,10 @@ set smtp_authenticators = 'login'
 # {{{ Add mailboxes
 
 mailboxes +INBOX \
-          +AC \
           +426a \
           +Smiths \
-          +"Sent Messages"
-          # +Drafts \
+          +"Sent Messages" \
+          +LinkedIN \
           # +Sent \
           # +Trash
 
